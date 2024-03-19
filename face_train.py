@@ -2,7 +2,7 @@ import os
 import cv2 as cv
 import numpy as np
 
-things = ['apple', 'book', 'chiar']
+things = ['apple', 'book', 'chair']
 DIR = r'C:\Users\Administrator\Downloads\train'
 
 
@@ -30,6 +30,16 @@ def create_train():
                 labels.append(label)
 create_train()
 
-print(f'Length of the features = {len(features)}')
-print(f'Length of the labels = {len(labels)}')
+print('Training done !')
+# print(f'Length of the features = {len(features)}')
+# print(f'Length of the labels = {len(labels)}')
 
+features = np.array(features, dtype=object)
+labels = np.array(labels)
+
+face_recognizer = cv.face.LBPHFaceRecognizer_create()
+
+face_recognizer.train(features,labels)
+
+np.save('features.npy', features)
+np.save('labels.npy', labels)
